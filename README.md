@@ -1,6 +1,6 @@
 # Laravel_CRUD_API
 
-## What you will need to run this program:
+## What you will need to run this app:
 - Docker https://hub.docker.com/editions/community/docker-ce-desktop-windows/
 
 Steps to setup this application:
