@@ -14,14 +14,24 @@ class ApiController extends Controller
     }
 
     public function createStudent(Request $request){
-        $student = new Student;
-        $student->name = $request->name;
-        $student->course = $request->course;
-        $student->save();
+        if($request->name != "" && $request->course != ""){
+            $student = new Student;
+            $student->name = $request->name;
+            $student->course = $request->course;
+            $student->save();
+            return response()->json([
+                "message" => "Record created",
+                "statusCode" => "201"
+            ], 201); //201 - SUCCESS, CREATED
+        } else {
+            return response()->json([
+               
+                "message" => "Record not created",
+                "statusCode" => "400"
+            ], 400); //400 BAD REQUEST
+        }
 
-        return response()->json([
-            "message" => "student record created"
-        ], 201); //201 - SUCCESS, CREATED
+        
     }
 
     public function getStudent($id) {
@@ -30,7 +40,8 @@ class ApiController extends Controller
             return response($student, 200);
         } else {
             return response()->json([
-                "message" => "Student not found"
+                "message" => "Student not found",
+                "statusCode" => "404"
             ], 404);
         }
     }
