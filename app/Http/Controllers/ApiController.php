@@ -12,7 +12,6 @@ class ApiController extends Controller
         $students = Student::get()->toJson(JSON_PRETTY_PRINT); //JSON_PRETTY_PRINT serialises the JSON
         return response($students, 200);
     }
-
     public function createStudent(Request $request){
         if($request->name != "" && $request->course != ""){
             $student = new Student;
@@ -21,31 +20,24 @@ class ApiController extends Controller
             $student->save();
             return response()->json([
                 "message" => "Record created",
-                "statusCode" => "201"
             ], 201); //201 - SUCCESS, CREATED
         } else {
             return response()->json([
                
                 "message" => "Record not created",
-                "statusCode" => "400"
             ], 400); //400 BAD REQUEST
         }
-
-        
     }
-
     public function getStudent($id) {
         if(Student::where('id', $id)->exists()) {
             $student = Student::where('id',$id)->get()->toJson(JSON_PRETTY_PRINT);
             return response($student, 200);
         } else {
             return response()->json([
-                "message" => "Student not found",
-                "statusCode" => "404"
+                "message" => "Record not found",
             ], 404);
         }
     }
-
     public function updateStudent(Request $request, $id) {
         if (Student::where('id',$id)->exists()) {
             $student = Student::find($id);
@@ -55,27 +47,24 @@ class ApiController extends Controller
 
             return response()->json([
                 "message" => "Record updated successfully",
-                "requestName" => "$request->name",
-                "requestCourse" => "$request->course",
             ], 200);
         } else {
             return response()->json([
-                "message" => "Student not found"
+                "message" => "Record not found"
             ], 404);
         }
     }
-
     public function deleteStudent ($id) {
         if(Student::where('id', $id)->exists()) {
             $student = Student::find($id);
             $student->delete();
 
             return response()->json([
-                "message" => "records deleted"
+                "message" => "Record deleted"
             ], 202);//202 Accepted
         } else {
             return response()->json([
-                "message" =>"Student not found"
+                "message" =>"Record not found"
             ], 404);
         }
     }
