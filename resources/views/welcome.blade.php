@@ -11,7 +11,7 @@
                 border: 1px solid black;
                 border-collapse: collapse;
             }
-            #nameInputTag, #courseInputTag {
+            #postNameInputTag, #postCourseInputTag {
                 float: right;
             }
         </style>
@@ -36,7 +36,7 @@
             <tr>
                 <td>GET</td>
                 <td>/api/students</td>
-                <td>Will return all students</td>
+                <td>Return all students</td>
                 <td>
                     N/A
                 </td>
@@ -45,8 +45,8 @@
             </tr>
             <tr>
                 <td>GET</td>
-                <td>/api/students/<input style="width: 30px;" id="api_students_id_input_tag" placeholder="ID" type="text" name="id"></td>
-                <td>Will return a student record by referencing its ID</td>
+                <td>/api/students/<input style="width: 30px;" id="get_api_students_id_input_tag" placeholder="ID" type="text"></td>
+                <td>Return a student record by referencing its ID</td>
                 <td>
                     Please enter student ID in the URI field
                 </td>
@@ -56,13 +56,32 @@
             <tr>
                 <td>POST</td>
                 <td>/api/students</td>
-                <td>Will create a new student record</td>
+                <td>Create a new student record</td>
                 <td>
-                    <input id="nameInputTag" placeholder="Name" type="text" name="name"><br>
-                    <input id="courseInputTag" placeholder="Course" type="text"  name="course"><br>
+                    <input id="postNameInputTag" placeholder="Name" type="text"><br>
+                    <input id="postCourseInputTag" placeholder="Course" type="text"><br>
                 </td>
                 <td><button onclick="post_api_students()">Request</button></td>
                 <td id="post_api_students_response"></td>
+            </tr>
+            <tr>
+                <td>PUT</td>
+                <td>/api/students/<input style="width: 30px;" id="put_api_students_id_input_tag" placeholder="ID" type="text"></td>
+                <td>Update an existing student record by referencing its id</td>
+                <td>
+                    <input id="putNameInputTag" placeholder="Name" type="text"><br>
+                    <input id="putCourseInputTag" placeholder="Course" type="text"><br>
+                </td>
+                <td><button onclick="put_api_students_id()">Request</button></td>
+                <td id="put_api_students_id_response"></td>
+            </tr>
+            <tr>
+                <td>DELETE</td>
+                <td>/api/students/<input style="width: 30px;" id="delete_api_students_id_input_tag" placeholder="ID" type="text"></td>
+                <td>Delete a student record by referencing its id</td>
+                <td>N/A</td>
+                <td><button onclick="delete_api_students_id()">Request</button></td>
+                <td id="delete_api_students_id_response"></td>
             </tr>
         </table>
     </div>
@@ -74,8 +93,8 @@
 <script>
     function post_api_students(){
         let formData = new FormData();
-        formData.append("name", document.getElementById("nameInputTag").value);
-        formData.append("course", document.getElementById("courseInputTag").value);
+        formData.append("name", document.getElementById("postNameInputTag").value);
+        formData.append("course", document.getElementById("postCourseInputTag").value);
         console.time("API request timer");
         fetch('http://localhost:3000/api/students', {
             method: 'POST',
@@ -86,7 +105,6 @@
             /* document.getElementById("info").innerHTML += `${data.message}<br>` */
             document.getElementById("post_api_students_response").innerHTML = `${data.message}`
             console.timeEnd("API request timer");
-            console.log(data);
             switch (data.statusCode) {
                 case "200": console.log("200");break;
                 case "201": console.log("201");break;
@@ -100,7 +118,6 @@
     }
 
     function get_api_students(){
-        let formData = new FormData();
         console.time("API request timer");
         fetch('http://localhost:3000/api/students', {
             method: 'GET',
@@ -110,20 +127,15 @@
             document.getElementById("get_api_students_response").innerHTML = "";
             data.forEach(e => {document.getElementById("get_api_students_response").innerHTML += `${e.id} ${e.name} ${e.course} ${e.created_at} ${e.updated_at}<br>`});
             console.timeEnd("API request timer");
-            console.log("data:", data);
         })
         .catch(exception => console.log('Error: ', exception));
     }
 
     function get_api_students_id(){
-        document.getElementById("info").innerHTML = document.getElementById("api_students_id_input_tag").value;
-        if(document.getElementById("api_students_id_input_tag").value){
-            console.log("nempty");
-            
-            let formData = new FormData();
+        document.getElementById("info").innerHTML += document.getElementById("get_api_students_id_input_tag").value;
+        if(document.getElementById("get_api_students_id_input_tag").value){
             console.time("API request timer");
-            console.log(document.getElementById("api_students_id_input_tag").value);
-            fetch(`http://localhost:3000/api/students/${document.getElementById("api_students_id_input_tag").value}`, {
+            fetch(`http://localhost:3000/api/students/${document.getElementById("get_api_students_id_input_tag").value}`, {
                 method: 'GET',
             })
             .then(response => response.json())
@@ -132,15 +144,32 @@
 
                 /* data.forEach(e => {document.getElementById("get_api_students_id_response").innerHTML += `${e.id} ${e.name} ${e.course} ${e.created_at} ${e.updated_at}<br>`}); */
                 console.timeEnd("API request timer");
-                console.log("data:", data);
             })
             .catch(exception => console.log('Error: ', exception));
         } else {
             console.log("empty");
         }
     }
-    
+    function put_api_students_id(){
+        document.getElementById("info").innerHTML += document.getElementById("get_api_students_id_input_tag").value;
+        if(document.getElementById("put_api_students_id_input_tag").value){
+            console.time("API request timer");
+            fetch(`http://localhost:3000/api/students/${document.getElementById("put_api_students_id_input_tag").value}`, {
+                method: 'PUT',
+                headers: {"Content-Type" : "application/json; charset=UTF-8"},
+                body: JSON.stringify({"name": `${document.getElementById("putNameInputTag").value}`, "course": `${document.getElementById("putCourseInputTag").value}`}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("put_api_students_id_response").innerHTML = `${data.message}<br>`;
+                console.timeEnd("API request timer");
+            })
+            .catch(exception => console.log('Error: ', exception));
+        } else {
+            document.getElementById("put_api_students_id_response").innerHTML = "Please provide a student ID";
+        }
+    }
 
-    let sl = document.getElementById("sl");
+    
 </script>
 </html>

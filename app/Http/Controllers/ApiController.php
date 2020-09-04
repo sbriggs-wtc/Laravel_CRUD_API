@@ -54,7 +54,9 @@ class ApiController extends Controller
             $student->save();
 
             return response()->json([
-                "message" => "records updated successfully"
+                "message" => "Record updated successfully",
+                "requestName" => "$request->name",
+                "requestCourse" => "$request->course",
             ], 200);
         } else {
             return response()->json([
