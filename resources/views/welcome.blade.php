@@ -15,7 +15,7 @@
     </head>
     <body>
     <div>
-        <h1>Endpoints:</h1>
+        <h1>API Endpoints:</h1>
         <table>
             <tr>
                 <th>Method</th>
