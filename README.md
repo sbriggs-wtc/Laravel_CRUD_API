@@ -2,6 +2,7 @@
 
 ## What you will need to run this app:
 - Docker https://hub.docker.com/editions/community/docker-ce-desktop-windows/
+- Git https://git-scm.com/downloads
 
 Steps to setup this application:
 1) Clone this repository to your local computer. Run "git clone https://github.com/sbriggs-wtc/Laravel_CRUD_API.git Laravel_CRUD_API".
