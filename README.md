@@ -8,7 +8,7 @@
 1) Clone this repository to your local computer. Run "git clone https://github.com/sbriggs-wtc/Laravel_CRUD_API.git Laravel_CRUD_API".
 2) Make sure the docker daemon is running. Run "docker ps -a" to check.
 3) Build the containers. Run "docker-compose up" from the root directory.
-4) Navigate to http://localhost:3000/ in your web browser. You should see the home page.
+4) Navigate to http://localhost:3000/ in your web browser. You should see the test page.
 5) To remove the containers, Run "docker-compose down".
 
 Note that you will have to populate the database with some student data using the provided endpoints.
