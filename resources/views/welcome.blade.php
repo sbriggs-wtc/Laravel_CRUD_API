@@ -3,19 +3,38 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>Laravel API</title>
-
+        <!-- <link rel="stylesheet" href="./app/public/sass/myStyle.css"/> -->
         <style>
+            body {
+                font-family: monospace;
+            }
             table, th, td {
-                border: 1px solid black;
+            border: 1px solid black;
                 border-collapse: collapse;
             }
+            /* body {
+                background: black;
+                color: green;
+                font-family: sans-serif;
+                font-family: monospace;
+            }
+            table, th, td {
+            border: 1px solid green;
+                border-collapse: collapse;
+            } */
+            /* input {
+                border: 2px solid black;
+            }
+            input::placeholder {
+                background: green;
+                color: black;
+            } */
         </style>
     </head>
     <body>
     <div>
-        <h1>API Endpoints:</h1>
+        <h1>Endpoints:</h1>
         <table>
             <tr>
                 <th>Method</th>
